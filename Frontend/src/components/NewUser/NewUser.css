@@ -1,0 +1,138 @@
+h5 {
+    margin: auto;
+    text-align: center;
+}
+
+.NewUser {
+   margin: 4.5rem auto;
+   font-size: 1.25rem;
+   background-color: #16a085;
+   color: #fff;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 90%;
+}
+
+p {
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -7vh;
+    font-size: 1.3rem;
+    font-style: italic;
+    font-size: bold;
+}
+
+.Form {
+        font-family: arial, sans-serif;
+        border: 1px solid #bbddcc;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.3);
+        padding-bottom: 0.5rem;
+}
+
+label {
+    height: 1.5rem;
+    margin: 8px;
+    text-align: center;
+}
+
+input {
+    height: 1.5rem;
+    margin-left: .4rem;
+    padding: 8px 15px;
+    margin: 8px 3px;
+    box-sizing: border-box;
+    align-self: center;
+    text-align: center;
+    font-size: .9rem;
+}
+
+input:active,
+input:hover, 
+input:focus,
+input:selected {
+    user-select: none;
+    filter: brightness(90%);
+    border: 1px solid #16a085;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+.SaveButton:active,
+.SaveButton:focus {
+    outline: none;
+}
+
+.SaveButton {
+    background: rgba(117, 199, 131, 0.5);
+    color: #fff;
+    margin-top: 1rem;
+    padding: 0px 20px; 
+    font-size: 1.2rem;
+    height: 3.2vh;
+    align-self: flex-end;
+    border: 1px solid  #bbddcc;
+    border-radius: 2px;
+}
+
+.SaveButton:disabled {
+    background: #ddd;
+}
+
+.SaveButton:hover {
+    outline: none;
+    filter: brightness(95%);
+    cursor: pointer;
+}
+
+@media(max-width: 700px) {
+
+    h5 {
+        top: 0;
+        font-size: 1rem;
+    }
+
+.NewUser {
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    display: grid;
+    grid-template-columns: 2fr;
+    width: 45%;
+    margin-bottom: 1.2rem;
+ }
+ 
+ .Form {
+     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+     padding-bottom: 0.5rem;
+     width: 70%;
+     margin: auto;
+ }
+
+ label {
+    margin: 5px;
+    display: grid;
+}
+
+input {
+    width:80% ;
+    height: .7rem;
+    margin-left: .2rem;
+    padding: 6px 12px;
+    margin: 0px 10px;
+    font-size: .9rem;
+}
+.SaveButton {
+    width: 50%;
+    background: rgba(117, 199, 131, 0.5);
+    color: #fff;
+    margin: .4rem;
+    padding: 2px 2px; 
+    font-size: .6rem;
+    height: 2.5vh;
+    display: grid;
+    margin: auto;
+}
+}
