@@ -1,9 +1,13 @@
 package com.cobanogluhasan.springboot.model;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.security.NoSuchAlgorithmException;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "users", uniqueConstraints = {
     @UniqueConstraint(columnNames = "Email")  // 确保列名大小写匹配数据库
 })

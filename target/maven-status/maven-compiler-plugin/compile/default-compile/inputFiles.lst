@@ -5,9 +5,11 @@ D:\daxi\Project\springboot-react-mysql-restful-Crud-master\src\main\java\com\cob
 D:\daxi\Project\springboot-react-mysql-restful-Crud-master\src\main\java\com\cobanogluhasan\springboot\model\StarProjects.java
 D:\daxi\Project\springboot-react-mysql-restful-Crud-master\src\main\java\com\cobanogluhasan\springboot\controller\RestorationRecordsController.java
 D:\daxi\Project\springboot-react-mysql-restful-Crud-master\src\main\java\com\cobanogluhasan\springboot\model\UploadImages.java
+D:\daxi\Project\springboot-react-mysql-restful-Crud-master\src\main\java\com\cobanogluhasan\springboot\config\MinioConfig.java
 D:\daxi\Project\springboot-react-mysql-restful-Crud-master\src\main\java\com\cobanogluhasan\springboot\model\Pigments.java
 D:\daxi\Project\springboot-react-mysql-restful-Crud-master\src\main\java\com\cobanogluhasan\springboot\model\SegQuery.java
 D:\daxi\Project\springboot-react-mysql-restful-Crud-master\src\main\java\com\cobanogluhasan\springboot\SpringBootUserDemoApplication.java
+D:\daxi\Project\springboot-react-mysql-restful-Crud-master\src\main\java\com\cobanogluhasan\springboot\service\MinioService.java
 D:\daxi\Project\springboot-react-mysql-restful-Crud-master\src\main\java\com\cobanogluhasan\springboot\model\Annotations.java
 D:\daxi\Project\springboot-react-mysql-restful-Crud-master\src\main\java\com\cobanogluhasan\springboot\repository\UploadImagesRepository.java
 D:\daxi\Project\springboot-react-mysql-restful-Crud-master\src\main\java\com\cobanogluhasan\springboot\controller\AnnotationsController.java

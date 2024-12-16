@@ -2,10 +2,14 @@ package com.cobanogluhasan.springboot.controller;
 
 import com.cobanogluhasan.springboot.exception.ResourceNotFoundException;
 import com.cobanogluhasan.springboot.model.UploadImages;
+import com.cobanogluhasan.springboot.model.Users;
 import com.cobanogluhasan.springboot.repository.UploadImagesRepository;
+import com.cobanogluhasan.springboot.repository.UsersRepository;
+import com.cobanogluhasan.springboot.service.MinioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,10 +19,14 @@ import java.util.List;
 public class UploadImagesController {
 
     private final UploadImagesRepository uploadImagesRepository;
+    private final UsersRepository usersRepository;
+    private final MinioService minioService;
 
     // 构造函数注入，无需 @Autowired 注解
-    public UploadImagesController(UploadImagesRepository uploadImagesRepository) {
+    public UploadImagesController(UploadImagesRepository uploadImagesRepository, UsersRepository usersRepository, MinioService minioService) {
         this.uploadImagesRepository = uploadImagesRepository;
+        this.usersRepository = usersRepository;
+        this.minioService = minioService;
     }
 
     // 获取所有上传图片
@@ -36,10 +44,25 @@ public class UploadImagesController {
     }
 
     // 创建新上传图片记录
-    @PostMapping("")
-    public ResponseEntity<UploadImages> createUploadImage(@RequestBody UploadImages newUploadImage) {
-        UploadImages createdUploadImage = this.uploadImagesRepository.save(newUploadImage);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUploadImage);
+    @PostMapping("/upload")
+    public ResponseEntity<UploadImages> uploadImage(@RequestParam("file") MultipartFile file, @RequestParam("userId") Integer userId) {
+        try {
+            // 通过userId查找用户信息
+            Users user = this.usersRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
+
+            // 上传文件到MinIO，并获取返回的对象ID
+            String minioId = minioService.uploadFileToMinio(file);
+
+            // 创建新的UploadImages实例
+            UploadImages newUploadImage = new UploadImages(minioId, user);
+            UploadImages savedUploadImage = this.uploadImagesRepository.save(newUploadImage);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedUploadImage);
+        } catch (Exception e) {
+            // 处理异常
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     // 更新上传图片信息
