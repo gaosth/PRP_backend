@@ -7,13 +7,13 @@
     <version>2.4.3</version>  
     <relativePath/>  
   </parent>  
-  <groupId>com.cobanogluhasan</groupId>  
-  <artifactId>Spring-boot-User-demo</artifactId>  
-  <version>0.0.1-SNAPSHOT</version>  
-  <name>Spring-boot-User-demo</name>  
-  <description>Demo project for Spring Boot</description>  
+  <groupId>com.zju</groupId>
+  <artifactId>prp</artifactId>
+  <version>0.0.2</version>
+  <name>PRP-project</name>
+  <description>Demo for PRP project</description>
   <properties> 
-    <java.version>1.8</java.version> 
+    <java.version>11</java.version>
   </properties>
   <dependencies>
     <dependency> 
@@ -35,10 +35,15 @@
       <scope>test</scope> 
     </dependency> 
     <dependency>
-			<groupId>io.minio</groupId>
-			<artifactId>minio</artifactId>
-			<version>8.2.1</version>
-		</dependency>
+      <groupId>io.minio</groupId>
+      <artifactId>minio</artifactId>
+      <version>8.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
   </dependencies>  
   <build> 
     <plugins>
@@ -53,8 +58,16 @@
     </plugin>
       <plugin> 
         <groupId>org.springframework.boot</groupId>  
-        <artifactId>spring-boot-maven-plugin</artifactId> 
-      </plugin> 
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
+      </plugin>
     </plugins> 
   </build> 
 </project>

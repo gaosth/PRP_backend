@@ -1,12 +1,8 @@
 {
   "properties": [
     {
-      "name": "dataSource.setDriverClassName("
-      com.mysql.cj.jdbc.Driver
-      ");",
+      "name": "dataSource.setDriverClassName('com.mysql.cj.jdbc.Driver');",
       "type": "java.lang.String",
-      "description": "Description for dataSource.setDriverClassName("
-      com.mysql.cj.jdbc.Driver
-    ");."
+      "description": "Description for dataSource.setDriverClassName('com.mysql.cj.jdbc.Driver');."
   }
 ] }
