@@ -13,17 +13,17 @@ Restful CRUD API for a simple user management application using Spring Boot, Mys
 **1. Clone the application**
 
 ```bash
-git clone https://github.com/hasancbngl/springboot-react-mysql-restful-Crud.git
+git clone https://github.com/gaosth/PRP_backend.git
 ```
 
 **2. Create Mysql database**
 ```bash
-create database db_user
+create database PRP
 ```
 
 **3. Change mysql username and password as per your installation**
 
-+ open `src/main/resources/application.properties`
++ open `src/main/resources/application.yaml`
 
 + change `spring.datasource.username` and `spring.datasource.password` as per your mysql installation
 
@@ -58,20 +58,18 @@ The app defines following CRUD APIs.
 
 You can test them using postman or from the UI.
 
-## To Run React App
+## Embedded Front-end Pages
 
-**1. Navigate to Frontend folder**
+**1. Access localhost:8080**
+
+The app has embedded front-end pages. Access `localhost:8080` to enter the top page.
 
 ```bash
 cd Frontend
 ```
 
-**2. Install the dependencies**
-Run
-```npm install``` or ```yarn```
+**2. Register and Login**
 
-**3. Run the app Locally**
-Run
-```npm start``` or ```yarn start```
+Check the database for the user data, enter the `email` and `password` to log in. In register page, you could register through `email`, and the user name will generated automatically from `email`.
 
-Open http://localhost:3000 to view it in the browser.
+

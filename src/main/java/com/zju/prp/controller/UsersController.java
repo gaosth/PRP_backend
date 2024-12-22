@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -34,6 +35,15 @@ public class UsersController {
         Users user = this.usersRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
         return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Users> login(@RequestBody Users user) {// 查找用户
+        Optional<Users> optionalUser = usersRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
+
+        // 登录成功
+        // 登录失败，返回 401 Unauthorized
+        return optionalUser.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null));
     }
 
     // 创建新用户
