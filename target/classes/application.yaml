@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/PRP
+    username: root
+#    password: 'zju200811'
+    password: '123456'
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  servlet:
+    multipart:
+      max-file-size: 50MB # 设置单个文件的最大大小 (例如 50MB)
+      max-request-size: 50MB  # 设置整个multipart/form-data请求的最大大小 (例如 50MB)
+# MinIO 配置
+minio:
+  endpoint: api.data.zjuidg.org
+  accessKey: xKXjaLSeWXy8f0F18oVR
+  secretKey: U8GXSGWhxxTEQWIeR6N5ME8mqejAijqFe4wQr1qA
+  bucketName: prp-images
+  secure: true
