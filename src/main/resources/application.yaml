@@ -2,14 +2,15 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/PRP
     username: root
-#    password: 'zju200811'
+#    password: '9999'
     password: '123456'
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        # dialect: org.hibernate.dialect.MySQL5InnoDBDialect
   servlet:
     multipart:
       max-file-size: 50MB # 设置单个文件的最大大小 (例如 50MB)
@@ -21,3 +22,12 @@ minio:
   secretKey: U8GXSGWhxxTEQWIeR6N5ME8mqejAijqFe4wQr1qA
   bucketName: prp-images
   secure: true
+# Server 配置
+server:
+  address: 0.0.0.0
+  port: 8080
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    com.zju.prp.controller: DEBUG

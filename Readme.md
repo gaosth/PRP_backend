@@ -64,6 +64,10 @@ You can test them using postman or from the UI.
 
 The app has embedded front-end pages. Access `localhost:8080` to enter the top page.
 
+```bash
+cd Frontend
+```
+
 **2. Register and Login**
 
 Check the database for the user data, enter the `email` and `password` to log in. In register page, you could register through `email`, and the user name will generated automatically from `email`.

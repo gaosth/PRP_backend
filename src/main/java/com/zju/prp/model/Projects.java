@@ -1,8 +1,8 @@
 package com.zju.prp.model;
 
-import lombok.AllArgsConstructor;
-
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "projects", 
@@ -40,8 +40,12 @@ public class Projects {
     @Column(name = "Poem", columnDefinition = "TEXT")
     private String poem;
 
+    @Column(name = "Poem_Author", length = 255)
+    private String poemAuthor;
+
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "Image_ID", referencedColumnName = "Image_ID", nullable = true)
+    @JsonIgnore
     private UploadImages image;
 
     @Column(name = "Status", length = 50)
@@ -49,16 +53,23 @@ public class Projects {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "User_ID", nullable = false)
+    @JsonIgnore
     private Users user;
 
     @Column(name = "Ref", columnDefinition = "JSON")
     private String ref; // JSON 字段需要转换为字符串存储
 
+    @Column(name = "Background", columnDefinition = "TEXT")
+    private String background;
+
+    @Column(name = "Allusion", columnDefinition = "TEXT")
+    private String allusion;
+
     // 默认构造函数
     public Projects() {}
 
     // 全参构造函数
-    public Projects(String title, String artist, String era, String material, String size, String institution, String description, String poem, UploadImages image, String status, Users user, String ref) {
+     public Projects(String title, String artist, String era, String material, String size, String institution, String description, String poem, UploadImages image, String status, Users user, String ref, String poemAuthor, String background, String allusion) {
         this.title = title;
         this.artist = artist;
         this.era = era;
@@ -71,6 +82,9 @@ public class Projects {
         this.status = status;
         this.user = user;
         this.ref = ref;
+        this.poemAuthor = poemAuthor;
+        this.background = background;
+        this.allusion = allusion;
     }
 
     // Getter 和 Setter 方法
@@ -146,6 +160,14 @@ public class Projects {
         this.poem = poem;
     }
 
+    public String getPoemAuthor() {
+        return poemAuthor;
+    }
+
+    public void setPoemAuthor(String poemAuthor) {
+        this.poemAuthor = poemAuthor;
+    }
+
     public UploadImages getImage() {
         return image;
     }
@@ -176,5 +198,31 @@ public class Projects {
 
     public void setRef(String ref) {
         this.ref = ref;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
+    }
+
+    public String getAllusion() {
+        return allusion;
+    }
+
+    public void setAllusion(String allusion) {
+        this.allusion = allusion;
+    }
+
+    @JsonProperty("imageId")
+    public Integer getImageID() {
+        return (image != null) ? image.getImageId() : null;
+    }
+
+    @JsonProperty("userId")
+    public Integer getUserID() {
+        return (user != null) ? user.getUserId() : null;
     }
 }

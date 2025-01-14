@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @CrossOrigin
@@ -15,6 +18,7 @@ import java.util.List;
 public class PaintingsController {
 
     private final PaintingsRepository paintingsRepository;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     // 构造函数注入，无需 @Autowired 注解
     public PaintingsController(PaintingsRepository paintingsRepository) {
@@ -74,5 +78,111 @@ public class PaintingsController {
 
         this.paintingsRepository.delete(existingPainting);
         return ResponseEntity.noContent().build();
+    }
+
+    // 部分更新绘画信息
+    @PatchMapping("/{id}")
+    public ResponseEntity<Paintings> patchPainting(@PathVariable Integer id, @RequestBody Map<String, Object> fields) {
+        Paintings existingPainting = this.paintingsRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Painting not found with id: " + id));
+
+        // 更新现有绘画记录的信息
+        fields.forEach((key, value) -> {
+            try {
+                switch (key) {
+                    case "mask":
+                        if (value instanceof String) {
+                            existingPainting.setMask((String) value);
+                        } else {
+                            existingPainting.setMask(objectMapper.writeValueAsString(value));
+                        }
+                        break;
+                    case "tensor":
+                        if (value instanceof String) {
+                            existingPainting.setTensor((String) value);
+                        } else {
+                            existingPainting.setTensor(objectMapper.writeValueAsString(value));
+                        }
+                        break;
+                    case "representativeColor":
+                        if (value instanceof String) {
+                            existingPainting.setRepresentativeColor((String) value);
+                        } else {
+                            throw new IllegalArgumentException("Invalid type for field: " + key);
+                        }
+                        break;
+                    case "title":
+                        if (value instanceof String) {
+                            existingPainting.setTitle((String) value);
+                        } else {
+                            throw new IllegalArgumentException("Invalid type for field: " + key);
+                        }
+                        break;
+                    case "artist":
+                        if (value instanceof String) {
+                            existingPainting.setArtist((String) value);
+                        } else {
+                            throw new IllegalArgumentException("Invalid type for field: " + key);
+                        }
+                        break;
+                    case "era":
+                        if (value instanceof String) {
+                            existingPainting.setEra((String) value);
+                        } else {
+                            throw new IllegalArgumentException("Invalid type for field: " + key);
+                        }
+                        break;
+                    case "material":
+                        if (value instanceof String) {
+                            existingPainting.setMaterial((String) value);
+                        } else {
+                            throw new IllegalArgumentException("Invalid type for field: " + key);
+                        }
+                        break;
+                    case "size":
+                        if (value instanceof String) {
+                            existingPainting.setSize((String) value);
+                        } else {
+                            throw new IllegalArgumentException("Invalid type for field: " + key);
+                        }
+                        break;
+                    case "institution":
+                        if (value instanceof String) {
+                            existingPainting.setInstitution((String) value);
+                        } else {
+                            throw new IllegalArgumentException("Invalid type for field: " + key);
+                        }
+                        break;
+                    case "description":
+                        if (value instanceof String) {
+                            existingPainting.setDescription((String) value);
+                        } else {
+                            throw new IllegalArgumentException("Invalid type for field: " + key);
+                        }
+                        break;
+                    case "poem":
+                        if (value instanceof String) {
+                            existingPainting.setPoem((String) value);
+                        } else {
+                            throw new IllegalArgumentException("Invalid type for field: " + key);
+                        }
+                        break;
+                    case "remarks":
+                        if (value instanceof String) {
+                            existingPainting.setRemarks((String) value);
+                        } else {
+                            existingPainting.setRemarks(objectMapper.writeValueAsString(value));
+                        }
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Invalid field: " + key);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("Error updating field " + key, e);
+            }
+        });
+
+        Paintings updatedPainting = this.paintingsRepository.save(existingPainting);
+        return ResponseEntity.ok(updatedPainting);
     }
 }

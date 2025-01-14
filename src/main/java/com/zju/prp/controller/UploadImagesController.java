@@ -12,16 +12,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RequestMapping("/uploadimages")
 public class UploadImagesController {
 
     private final UploadImagesRepository uploadImagesRepository;
     private final UsersRepository usersRepository;
     private final MinioService minioService;
+    private static final Logger logger = LoggerFactory.getLogger(UploadImagesController.class);
 
     // 构造函数注入，无需 @Autowired 注解
     public UploadImagesController(UploadImagesRepository uploadImagesRepository, UsersRepository usersRepository, MinioService minioService) {
@@ -54,6 +58,7 @@ public class UploadImagesController {
 
             // 上传文件到MinIO，并获取返回的对象ID
             String minioId = minioService.uploadFileToMinioUnsafe(file);
+            // String minioId = minioService.uploadFileToMinio(file);
 
             // 创建新的UploadImages实例
             UploadImages newUploadImage = new UploadImages(minioId, user);
@@ -91,5 +96,33 @@ public class UploadImagesController {
 
         this.uploadImagesRepository.delete(existingUploadImage);
         return ResponseEntity.noContent().build();
+    }
+
+    // 获取URL
+    @GetMapping("/img/{imageId}")
+    public ResponseEntity<String> getPresignedUrl(@PathVariable Integer imageId) {
+        try {
+            // 根据ID查找上传图片记录
+            UploadImages uploadImage = this.uploadImagesRepository.findById(imageId)
+                    .orElseThrow(() -> new ResourceNotFoundException("UploadImage not found with id: " + imageId));
+
+            logger.info("Minio Path: {}", uploadImage.getMinioId());
+
+            // 通过MinIO服务生成预签名URL
+            String presignedUrl = minioService.generatePresignedUrl(uploadImage.getMinioId());
+
+            // 记录预签名URL到控制台
+            logger.info("Generated presigned URL for imageId {}: {}", imageId, presignedUrl);
+
+            // 返回预签名URL
+            return ResponseEntity.ok(presignedUrl);
+        } catch (ResourceNotFoundException e) {
+            // 处理资源未找到异常
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            // 处理其他异常
+            logger.error("Error generating presigned URL for imageId {}: {}", imageId, e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error generating presigned URL");
+        }
     }
 }

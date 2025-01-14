@@ -36,6 +36,7 @@ CREATE TABLE Projects (
     Institution VARCHAR(255),
     Description TEXT,
     Poem TEXT,
+    poem_Author VARCHAR(255),
     Image_ID INT,
     Status VARCHAR(50),
     User_ID INT NOT NULL,

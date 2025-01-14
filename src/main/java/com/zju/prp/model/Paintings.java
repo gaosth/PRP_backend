@@ -20,7 +20,7 @@ public class Paintings {
     @Column(name = "Representative_Color", columnDefinition = "JSON", nullable = false)
     private String representativeColor;
 
-    @Column(name = "Title", nullable = false, length = 255)
+    @Column(name = "Title", length = 255)
     private String title;
 
     @Column(name = "Artist", length = 255)
