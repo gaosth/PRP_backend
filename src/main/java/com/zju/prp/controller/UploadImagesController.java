@@ -1,7 +1,6 @@
 package com.zju.prp.controller;
 
 import com.zju.prp.exception.ResourceNotFoundException;
-import com.zju.prp.model.Result;
 import com.zju.prp.model.UploadImages;
 import com.zju.prp.model.Users;
 import com.zju.prp.repository.UploadImagesRepository;
