@@ -17,7 +17,7 @@ public class Paintings {
     @Column(name = "Tensor", columnDefinition = "JSON", nullable = false)
     private String tensor;
 
-    @Column(name = "Representative_Color", nullable = false, length = 50)
+    @Column(name = "Representative_Color", columnDefinition = "JSON", nullable = false)
     private String representativeColor;
 
     @Column(name = "Title", nullable = false, length = 255)

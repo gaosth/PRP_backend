@@ -2,6 +2,10 @@ package com.zju.prp.model;
 
 import javax.persistence.*;
 
+import java.util.StringJoiner;
+
+import static com.zju.prp.util.MinioConfig.*;
+
 @Entity
 @Table(name = "uploadimages")  // 匹配数据库表名
 public class UploadImages {
@@ -50,5 +54,18 @@ public class UploadImages {
 
     public void setUser(Users user) {
         this.user = user;
+    }
+
+    public void setUserId(int userId) {
+        this.user = new Users();
+        this.user.setUserId(userId);
+    }
+//
+    public String getImageUrl(){
+        StringJoiner sj = new StringJoiner("/");
+        sj.add(endpoint);
+        sj.add(bucketName);
+
+        return sj + this.minioId;
     }
 }

@@ -1,5 +1,7 @@
 package com.zju.prp.model;
 
+import lombok.AllArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
@@ -38,7 +40,7 @@ public class Projects {
     @Column(name = "Poem", columnDefinition = "TEXT")
     private String poem;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "Image_ID", referencedColumnName = "Image_ID", nullable = true)
     private UploadImages image;
 

@@ -7,7 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -23,8 +26,22 @@ public class ProjectsController {
 
     // 获取所有项目
     @GetMapping("")
-    public List<Projects> getAllProjects() {
-        return this.projectsRepository.findAll();
+    public ResponseEntity<List<Projects>> getAllProjects() {
+        return ResponseEntity.ok(this.projectsRepository.findAll());
+    }
+
+    @GetMapping("/list-simply")
+    public ResponseEntity<List<Map<String, Object>>> getProjectsSimply() {
+        List<Projects> projectsList = this.projectsRepository.findAll();
+        // 将 Projects 对象转换为 Map 格式
+        List<Map<String, Object>> result = projectsList.stream().map(project -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("project_id", project.getProjectId());
+            map.put("title", project.getTitle());
+            map.put("image_url", project.getImage() != null ? project.getImage().getImageUrl() : null);
+            return map;
+        }).collect(Collectors.toList());
+        return ResponseEntity.ok(result);
     }
 
     // 根据 ID 获取单个项目

@@ -41,4 +41,26 @@ public class MinioService {
             return objectName; // 返回存储路径或对象ID
         }
     }
+
+
+    public String uploadFileToMinioUnsafe(MultipartFile file) throws Exception {
+        String originalFileName = file.getOriginalFilename();
+        String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        String filePrefix = originalFileName.substring(0, originalFileName.lastIndexOf("."));
+        String objectName = filePrefix + "-" + UUID.randomUUID().toString() + fileExtension;
+
+        String unsafeObjectName = "/resource/" + objectName;
+
+        try (InputStream inputStream = file.getInputStream()) {
+            minioClient.putObject(
+                    PutObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object(unsafeObjectName)
+                            .stream(inputStream, file.getSize(), -1)
+                            .contentType(file.getContentType())
+                            .build()
+            );
+            return unsafeObjectName; // 返回存储路径或对象ID
+        }
+    }
 }

@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/uploadimages")
 public class UploadImagesController {
 
@@ -53,7 +53,7 @@ public class UploadImagesController {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
 
             // 上传文件到MinIO，并获取返回的对象ID
-            String minioId = minioService.uploadFileToMinio(file);
+            String minioId = minioService.uploadFileToMinioUnsafe(file);
 
             // 创建新的UploadImages实例
             UploadImages newUploadImage = new UploadImages(minioId, user);
