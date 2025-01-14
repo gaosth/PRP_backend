@@ -68,6 +68,7 @@ public class ProjectsController {
     public ResponseEntity<Projects> createProject(@RequestBody Projects newProject) {
         Projects createdProject = this.projectsRepository.save(newProject);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProject);
+    }
 
     /**
      * 创建新项目 暂不启用
@@ -117,6 +118,7 @@ public class ProjectsController {
 //    }
 
     // 更新项目信息
+
     @PutMapping("/{id}")
     public ResponseEntity<Projects> updateProject(@PathVariable Integer id, @Valid @RequestBody ProjectsRequest request) {
         Projects existingProject = this.projectsRepository.findById(id)
